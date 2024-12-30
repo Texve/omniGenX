@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+<body>
+<h1>HTML</h1>
+<div id="lightningout"></div>
+<script src="https://texvellc--texvedemo.sandbox.my.salesforce.com/lightning/lightning.out.js"></script>
+<script>
+
+            $Lightning.use(
+
+                'c:LightningOutDependencyApp', // name of the Lightning Out app
+
+                function () { // callback after the framework and app load
+
+                    $Lightning.createComponent(
+
+                        'c:WebsiteChat', // top-level component of the Lightning Out app
+
+                        {}, // attributes to set on the component
+
+                        'lightningout', // DOM element ID where the component is inserted
+
+                        function (cmp) { // callback after the component loads
+
+                            console.log('The component was created.');
+
+                        }
+
+                    );
+
+                },
+
+                'https://texvellc--texvedemo.sandbox.my.site.com' // Experience Cloud site endpoint
+
+            );
+</script>
+</body>
+</html>
+ 
