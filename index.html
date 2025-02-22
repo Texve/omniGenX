@@ -13,7 +13,7 @@
   </script>
 <script type="module">
   import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js';
-  import { getMessaging, getToken, onMessage, onBackgroundMessage  } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-messaging.js';
+  import { getMessaging, getToken } from 'https://www.gstatic.com/firebasejs/9.6.1/firebase-messaging.js';
 
   // Initialize Firebase with your configuration
     const firebaseConfig = {
@@ -50,18 +50,6 @@
 
     // Call the function to request notification permission
     requestPermission();
-
-    // Background message handler
-    onBackgroundMessage(messaging, (payload) => {
-      console.log('Received background message:', payload);
-      const notificationTitle = payload.notification.title;
-      const notificationOptions = {
-        body: payload.notification.body,
-        icon: '/firebase-logo.png', // Adjust icon path
-      };
-
-      self.registration.showNotification(notificationTitle, notificationOptions);
-    });
 </script>
   <style>
     body {
