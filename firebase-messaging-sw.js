@@ -1,7 +1,17 @@
-// Import Firebase messaging and initialize it
-importScripts('https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js');
-importScripts('https://www.gstatic.com/firebasejs/9.6.1/firebase-messaging.js');
 
+
+
+
+// Give the service worker access to Firebase Messaging.
+// Note that you can only use Firebase Messaging here. Other Firebase libraries
+// are not available in the service worker.
+// Replace 10.13.2 with latest version of the Firebase JS SDK.
+importScripts('https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js');
+importScripts('https://www.gstatic.com/firebasejs/10.13.2/firebase-messaging-compat.js');
+
+// Initialize the Firebase app in the service worker by passing in
+// your app's Firebase config object.
+// https://firebase.google.com/docs/web/setup#config-object
  const firebaseConfig = {
     apiKey: "AIzaSyDqaigSMPYeXYu1__T8Mj_y0h3bCQYb4I0",
     authDomain: "livechat-dc6d0.firebaseapp.com",
@@ -12,17 +22,19 @@ importScripts('https://www.gstatic.com/firebasejs/9.6.1/firebase-messaging.js');
     measurementId: "G-FX8JBRT2N5"
   };
 
-// Initialize Firebase and messaging
-firebase.initializeApp(firebaseConfig);
+// Retrieve an instance of Firebase Messaging so that it can handle background
+// messages.
 const messaging = firebase.messaging();
-
-// Handle background notifications
-messaging.onBackgroundMessage(function(payload) {
-  console.log("Received background message: ", payload);
-  const notificationTitle = payload.notification.title;
+messaging.onBackgroundMessage((payload) => {
+  console.log(
+    '[firebase-messaging-sw.js] Received background message ',
+    payload
+  );
+  // Customize notification here
+  const notificationTitle = 'Background Message Title';
   const notificationOptions = {
-    body: payload.notification.body,
-    icon: '/firebase-logo.png',
+    body: 'Background Message body.',
+    icon: '/firebase-logo.png'
   };
 
   self.registration.showNotification(notificationTitle, notificationOptions);
