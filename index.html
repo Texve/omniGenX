@@ -19,19 +19,34 @@
         measurementId: "G-FX8JBRT2N5"
       };
 
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const messaging = getMessaging(app);
+  
+firebase.initializeApp(firebaseConfig);
 
-  // Request notification permission and get token
-  Notification.requestPermission().then(function() {
+// Get messaging instance
+const messaging = firebase.messaging();
+
+// Register the service worker (if not already registered)
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/firebase-messaging-sw.js')
+    .then(function(registration) {
+      console.log('Service Worker registered with scope:', registration.scope);
+      messaging.useServiceWorker(registration);
+    }).catch(function(error) {
+      console.error('Service Worker registration failed:', error);
+    });
+}
+
+// Request notification permission
+messaging.requestPermission()
+  .then(function() {
     console.log('Notification permission granted.');
-    return getToken(messaging, { vapidKey: 'BCwqdeCW7-s0fR_xrLVl-MK5ymSwqfyqF_vy_7GcnlrUr25mTNn8ZVHjNQ77jJdW0lI9_ArPzYMaRe10UwrBY0A' });
-  }).then(function(token) {
-    console.log("Device Token:", token);
-    // Send this token to your Salesforce system or save it for later use
-  }).catch(function(err) {
-    console.error('Permission denied:', err);
+    return messaging.getToken({ vapidKey: 'BCwqdeCW7-s0fR_xrLVl-MK5ymSwqfyqF_vy_7GcnlrUr25mTNn8ZVHjNQ77jJdW0lI9_ArPzYMaRe10UwrBY0A' });
+  })
+  .then(function(token) {
+    console.log('FCM Token:', token);
+  })
+  .catch(function(error) {
+    console.error('Permission request failed:', error);
   });
 </script>
   <style>
