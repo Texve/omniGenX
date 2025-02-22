@@ -3,6 +3,32 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-messaging.js"></script>
+  <script>
+     const firebaseConfig = {
+        apiKey: "AIzaSyDqaigSMPYeXYu1__T8Mj_y0h3bCQYb4I0",
+        authDomain: "livechat-dc6d0.firebaseapp.com",
+        projectId: "livechat-dc6d0",
+        storageBucket: "livechat-dc6d0.firebasestorage.app",
+        messagingSenderId: "302939024833",
+        appId: "1:302939024833:web:a0e9e00a1c3d93b6509340",
+        measurementId: "G-FX8JBRT2N5"
+      };
+  
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    console.log('Initialize Firebase');
+    // Get Firebase Messaging instance
+    const messaging = firebase.messaging();
+    console.log('Initialize FCM');
+    messaging.requestPermission().then(() => messaging.getToken())
+    .then(token => console.log("FCM Token:", token))
+    .catch(error => console.error("Permission Denied:", error));
+     messaging.onMessage((payload) => {
+         console.log("Push Notification:", payload);
+     });
+  </script>
   <style>
     body {
       margin: 0;
