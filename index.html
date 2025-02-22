@@ -26,7 +26,7 @@
   // Request notification permission and get token
   Notification.requestPermission().then(function() {
     console.log('Notification permission granted.');
-    return getToken(messaging, { vapidKey: 'YOUR_VAPID_KEY' });
+    return getToken(messaging, { vapidKey: 'BCwqdeCW7-s0fR_xrLVl-MK5ymSwqfyqF_vy_7GcnlrUr25mTNn8ZVHjNQ77jJdW0lI9_ArPzYMaRe10UwrBY0A' });
   }).then(function(token) {
     console.log("Device Token:", token);
     // Send this token to your Salesforce system or save it for later use
